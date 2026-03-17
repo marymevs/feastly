@@ -1,11 +1,11 @@
-import client from "../client.js";
+import db from "../client.js";
 
 /**
  * Get all allergies from the database.
  * @returns {Promise<Array>} Array of allergy objects
  */
 export const getAllAllergies = async () => {
-  const { rows } = await client.query(`
+  const { rows } = await db.query(`
     SELECT *
     FROM allergies
     ORDER BY name ASC;
@@ -22,7 +22,7 @@ export const getAllAllergies = async () => {
 export const getAllergyById = async (id) => {
   const {
     rows: [allergy],
-  } = await client.query(
+  } = await db.query(
     `
     SELECT *
     FROM allergies
@@ -42,7 +42,7 @@ export const getAllergyById = async (id) => {
 export const createAllergy = async (name) => {
   const {
     rows: [allergy],
-  } = await client.query(
+  } = await db.query(
     `
     INSERT INTO allergies (name)
     VALUES ($1)
@@ -63,7 +63,7 @@ export const createAllergy = async (name) => {
 export const updateAllergy = async (id, name) => {
   const {
     rows: [allergy],
-  } = await client.query(
+  } = await db.query(
     `
     UPDATE allergies
     SET name = $2
@@ -84,7 +84,7 @@ export const updateAllergy = async (id, name) => {
 export const deleteAllergy = async (id) => {
   const {
     rows: [allergy],
-  } = await client.query(
+  } = await db.query(
     `
     DELETE FROM allergies
     WHERE id = $1

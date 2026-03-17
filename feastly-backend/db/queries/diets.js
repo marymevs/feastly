@@ -1,11 +1,11 @@
-import client from "../client.js";
+import db from "../client.js";
 
 /**
  * Get all diets from the database.
  * @returns {Promise<Array>} Array of diet objects
  */
 export const getAllDiets = async () => {
-  const { rows } = await client.query(`
+  const { rows } = await db.query(`
     SELECT *
     FROM diets
     ORDER BY name ASC;
@@ -22,7 +22,7 @@ export const getAllDiets = async () => {
 export const getDietById = async (id) => {
   const {
     rows: [diet],
-  } = await client.query(
+  } = await db.query(
     `
     SELECT *
     FROM diets
@@ -36,13 +36,13 @@ export const getDietById = async (id) => {
 
 /**
  * Create a new diet.
- * @param {string} name - Diet name (e.g., keto, vegan)
+ * @param {string} name - Diet name
  * @returns {Promise<Object>} Created diet
  */
 export const createDiet = async (name) => {
   const {
     rows: [diet],
-  } = await client.query(
+  } = await db.query(
     `
     INSERT INTO diets (name)
     VALUES ($1)
@@ -63,7 +63,7 @@ export const createDiet = async (name) => {
 export const updateDiet = async (id, name) => {
   const {
     rows: [diet],
-  } = await client.query(
+  } = await db.query(
     `
     UPDATE diets
     SET name = $2
@@ -84,7 +84,7 @@ export const updateDiet = async (id, name) => {
 export const deleteDiet = async (id) => {
   const {
     rows: [diet],
-  } = await client.query(
+  } = await db.query(
     `
     DELETE FROM diets
     WHERE id = $1
